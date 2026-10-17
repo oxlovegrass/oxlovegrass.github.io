@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛爱草有限公司</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* 导航栏 */
+        .nav {
+            background: #1a365d;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .nav .menu {
+            display: flex;
+            gap: 30px;
+        }
+        .nav .menu a {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .nav .menu a:hover, .nav .menu a.active {
+            color: white;
+        }
+
+        /* 页面容器 */
+        .page { display: none; min-height: 80vh; }
+        .page.active { display: block; }
+
+        /* 首页 */
+        .hero {
+            background: linear-gradient(135deg, #7498d8 0%, #90b4e8 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 { font-size: 42px; margin-bottom: 20px; }
+        .hero p { font-size: 18px; opacity: 0.9; }
+        .mission {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .mission h2 {
+            font-size: 28px;
+            color: #1a365d;
+            margin-bottom: 24px;
+        }
+        .mission p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+        }
+        .values {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            gap: 20px;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        .value-card {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .value-card h3 { color: #2b6cb0; margin-bottom: 10px; }
+        .value-card p { font-size: 14px; color: #666; }
+
+        /* 员工介绍 */
+        .section-title {
+            text-align: center;
+            padding: 50px 20px 30px;
+            font-size: 28px;
+            color: #1a365d;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .team-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .team-card .info { padding: 16px; }
+        .team-card h4 { font-size: 17px; margin-bottom: 6px; }
+        .team-card p { font-size: 13px; color: #888; }
+
+        /* 公司食堂 */
+        .canteen-banner {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        .canteen-intro {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .canteen-intro h2 { color: #1a365d; margin-bottom: 16px; }
+        .canteen-intro p { line-height: 1.8; color: #555; }
+        .canteen-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+        .canteen-gallery img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* 分公司 */
+        .branch-list {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+        .branch-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .branch-item img {
+            width: 280px;
+            min-height: 180px;
+            object-fit: cover;
+        }
+        .branch-item .detail {
+            padding: 24px;
+        }
+        .branch-item h3 { color: #1a365d; margin-bottom: 8px; }
+        .branch-item p { font-size: 14px; color: #666; line-height: 1.7; }
+
+        /* 页脚 */
+        .footer {
+            background: #1a365d;
+            color: #a0aec0;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        /* 手机适配 */
+        @media (max-width: 600px) {
+            .nav { padding: 12px 16px; }
+            .nav .menu { gap: 16px; }
+            .hero h1 { font-size: 28px; }
+            .branch-item { flex-direction: column; }
+            .branch-item img { width: 100%; height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div class="nav">
+    <div class="logo">牛爱草</div>
+    <div class="menu">
+        <a class="active" onclick="showPage('home')">首页</a>
+        <a onclick="showPage('team')">员工介绍</a>
+        <a onclick="showPage('canteen')">公司食堂</a>
+        <a onclick="showPage('branch')">分公司</a>
+    </div>
+</div>
+
+<!-- ===== 首页 ===== -->
+<div id="home" class="page active">
+    <div class="hero"  style="background-color:#6a8fc7;">      
+<h1 style="color:#1a3b70;">牛爱草有限公司</h1>
+        <p style="color:#365899;">牛草诚心为你服务，欢迎加入我们！</p>
+    </div>
+    <div class="mission">
+        <h2>公司宗旨</h2>
+        <p>
+            我们致力于对叙事作品中角色之间的情感联结与关系张力进行审美鉴赏，品味人物互动间的情感叙事与人性共鸣；
+            品鉴文艺创作中角色情感叙事，体会文本刻画下多元亲密关系里的情绪、羁绊与精神共鸣；
+            依托原作设定进行衍生叙事创作，挖掘角色的潜在性格与关系可能性。
+        </p>
+    </div>
+    <div class="values">
+        <div class="value-card">
+            <h3>创新</h3>
+            <p>不断创作家产作品中</p>
+        </div>
+        <div class="value-card">
+            <h3>诚信</h3>
+            <p>对产品诚心，对家产尽心</p>
+        </div>
+        <div class="value-card">
+            <h3>协作</h3>
+            <p>开放沟通欢迎加入</p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 员工介绍 ===== -->
+<div id="team" class="page">
+    <h2 class="section-title">核心团队</h2>
+    <div class="team-grid">
+        <div class="team-card">
+            <!-- 替换图片：把下面引号里的路径换成你的图片文件名 -->
+            <img src="./img/team1.jpg" alt="员工1">
+            <div class="info">
+                <h4>老公牛</h4>
+                <p>CEO · 创始人</p>
+            </div>
+        </div>
+        <div class="team-card">
+            <img src="./img/team2.jpg" alt="员工2">
+            <div class="info">
+                <h4>鲤鱼山</h4>
+                <p>CTO · 技术总监</p>
+            </div>
+        </div>
+        <div class="team-card">
+            <img src="./img/team3.jpg" alt="员工3">
+            <div class="info">
+                <h4>草</h4>
+                <p>副总裁/食堂主厨</p>
+            </div>
+        </div>
+     </div>
+</div>
+
+<!-- ===== 公司食堂 ===== -->
+<div id="canteen" class="page">
+    <!-- 替换图片：食堂大图 -->
+    <img src="img/canteen-banner.jpg" class="canteen-banner" alt="公司食堂">
+    <div class="canteen-intro">
+        <h2>员工食堂</h2>
+        <p>
+            公司食堂提供早中晚三餐，菜品丰富、营养均衡，
+            每日更新菜单，兼顾各地口味。干净整洁的用餐环境，
+            让每一位员工都能吃得放心、吃得开心。
+        </p>
+    </div>
+    <div class="canteen-gallery">
+        <img src="img/canteen1.jpg" alt="菜品1">
+        <img src="img/canteen2.jpg" alt="菜品2">
+        <img src="img/canteen3.jpg" alt="菜品3">
+    </div>
+</div>
+
+<!-- ===== 分公司介绍 ===== -->
+<div id="branch" class="page">
+    <h2 class="section-title">分公司分布</h2>
+    <div class="branch-list">
+        <div class="branch-item">
+                        <div class="detail">
+                <h3>天津分公司</h3>
+                <p>地址：天津市北辰区<br>
+                   业务：总部研发中心，负责核心技术与产品研发</p>
+            </div>
+        </div>
+        <div class="branch-item">
+                        <div class="detail">
+                <h3>廊坊分公司</h3>
+                <p>地址：河北省廊坊市固安区<br>
+                   业务：华东区运营中心，负责市场拓展与客户服务</p>
+            </div>
+        </div>
+        <div class="branch-item">
+                        <div class="detail">
+                <h3>河南分公司</h3>
+                <p>地址：河南郑州市金水区<br>
+                   业务：华南区研发分部，负责产品加工和品控</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer">
+    © 2026 牛爱草有限公司 版权所有
+</div>
+
+<script>
+    function showPage(id) {
+        // 隐藏所有页面
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // 显示选中的页面
+        document.getElementById(id).classList.add('active');
+        // 更新导航高亮
+        document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+        event.target.classList.add('active');
+        // 回到顶部
+        window.scrollTo(0, 0);
+    }
+</script>
+
+</body>
+</html>
